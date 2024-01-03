@@ -1,42 +1,16 @@
 'use client'
 
 import Header from '../components/header/page'
-import data from '../components/data.json'
 import InvoiceLabel from '../components/invoice/invoicelabel/page'
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import useDataStore from '../store/dataStore'
 
 export default function Home() {
+  const { loading, apiData, fetchDataFromApi } = useDataStore()
   const [selectedStatuses, setSelectedStatuses] = useState([])
-  const [loading, setLoading] = useState(false)
 
-  const [ApiData, setApiData] = useState([])
-
-  const fetchDataFromApi = async () => {
-    try {
-      setLoading(true)
-      const response = await fetch('/api/invoices', {
-        headers: {
-          Accept: 'application/json',
-          method: ' GET'
-        }
-      })
-      if (response) {
-        const data = await response.json()
-        setApiData(data.data)
-      }
-    } catch (error) {
-      console.log(error)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  useEffect(() => {
-    fetchDataFromApi()
-  }, [])
-
-  const handleStatusChange = (status) => {
+  const handleStatusChange = (status: any) => {
     if (selectedStatuses.includes(status)) {
       setSelectedStatuses(selectedStatuses.filter((s) => s !== status))
     } else {
@@ -44,12 +18,12 @@ export default function Home() {
     }
   }
 
-  const filteredData = ApiData.filter((item) => {
+  const filteredData = apiData.filter((item: any) => {
     if (selectedStatuses.length === 0) return true // If no status is selected, show all
-    return selectedStatuses.includes(item.status)
+    return selectedStatuses.includes(item?.status)
   })
 
-  console.log('ApiData:', ApiData)
+  console.log('ApiData:', apiData)
 
   return (
     <section className="py-24">
@@ -64,7 +38,7 @@ export default function Home() {
           <p>Loading...</p>
         ) : (
           // Render the data when not loading
-          filteredData.map((item) => (
+          filteredData.map((item: any) => (
             <Link href={`/invoice/${item.id}`} key={item.id}>
               <InvoiceLabel
                 invoiceId={item.invoiceId}
@@ -76,19 +50,6 @@ export default function Home() {
             </Link>
           ))
         )}
-
-        {/* {filteredData.map((item) => (
-          <Link href={`/invoice/${item.id}`}>
-            <InvoiceLabel
-              key={item.id}
-              invoiceId={item.invoiceId}
-              dueDate={item.dueDate}
-              name={item.name}
-              price={item.price}
-              status={item.status}
-            />
-          </Link>
-        ))} */}
       </div>
     </section>
   )
