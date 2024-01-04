@@ -26,11 +26,12 @@ export default function InvoiceDetailPageID() {
 
   return (
     <>
-      {data.map((invoice) => {
+      {apiData.map((invoice) => {
         if (params.id === invoice.id.toString()) {
           return (
             <div className="container py-24" key={invoice.id}>
               <GoBack />
+
               <InvoiceDetailHeader
                 handleDelete={handleDelete}
                 status={invoice.status}

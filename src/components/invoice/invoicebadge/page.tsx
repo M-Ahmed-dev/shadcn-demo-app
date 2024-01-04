@@ -4,13 +4,13 @@ export default function InvoiceBadge(props: any) {
   let textColorClass = 'text-green-400'
   let activeColor = 'bg-green-400'
 
-  if (status.toLowerCase() === 'pending') {
+  if (status?.toLowerCase() === 'pending') {
     bgColorClass = 'bg-yellow-950'
     textColorClass = 'text-yellow-600'
     activeColor = 'bg-yellow-600'
   }
 
-  if (status.toLowerCase() === 'draft') {
+  if (status?.toLowerCase() === 'draft') {
     bgColorClass = 'bg-[#E0E0E0]'
     textColorClass = 'text-gray-400'
     activeColor = 'bg-gray-400'

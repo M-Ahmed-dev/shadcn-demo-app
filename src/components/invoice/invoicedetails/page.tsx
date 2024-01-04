@@ -14,6 +14,7 @@ export default function InvoiceDetails(props: any) {
             <p className="text-xl font-bold mb-[0.75rem]">{props.name}</p>
             <p>{props.streetAddress}</p>
             <p>{props.postalCode}</p>
+            <p>{props.city}</p>
             <p>{props.country}</p>
           </div>
         </div>

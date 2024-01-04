@@ -4,6 +4,7 @@ import Providers from './provider'
 import MainNav from 'components/ui/menubar'
 import { Inter } from 'next/font/google'
 import LocaleSwitcher from '@/src/components/LocalSwitcher'
+import { ModeToggle } from '@/components/ui/mode-toggle'
 const inter = Inter({ subsets: ['latin'] })
 
 export default function RootLayout({
@@ -15,8 +16,10 @@ export default function RootLayout({
     <html>
       <body className={inter.className}>
         <Providers>
-          <MainNav />
-          <LocaleSwitcher />
+          <ModeToggle />
+
+          {/* <MainNav /> */}
+          {/* <LocaleSwitcher /> */}
           {children}
         </Providers>
       </body>

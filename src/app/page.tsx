@@ -5,6 +5,7 @@ import InvoiceLabel from '../components/invoice/invoicelabel/page'
 import Link from 'next/link'
 import { useState } from 'react'
 import useDataStore from '../store/dataStore'
+import { ModeToggle } from '@/components/ui/mode-toggle'
 
 export default function Home() {
   const { loading, apiData, fetchDataFromApi } = useDataStore()

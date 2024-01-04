@@ -14,11 +14,13 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger
 } from '@/components/ui/alert-dialog'
+import { useToast } from '@/components/ui/use-toast'
 
 export default function InvoiceDetailHeader(props: any) {
   const { handleDelete } = props
   const { status } = props
   const params = useParams()
+  const { toast } = useToast()
 
   return (
     <>
@@ -33,10 +35,7 @@ export default function InvoiceDetailHeader(props: any) {
 
           <AlertDialog>
             <AlertDialogTrigger>
-              <Button
-                onClick={() => handleDelete(Number(params.id))}
-                className="rounded-full bg-[#EC5757]  p-[1.5rem]"
-              >
+              <Button className="rounded-full bg-[#EC5757] p-[1.5rem]">
                 Delete
               </Button>
             </AlertDialogTrigger>
@@ -50,7 +49,17 @@ export default function InvoiceDetailHeader(props: any) {
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction>Confirm</AlertDialogAction>
+                <AlertDialogAction
+                  onClick={() => {
+                    toast({
+                      title: 'Scheduled: Catch up',
+                      description: 'Friday, February 10, 2023 at 5:57 PM'
+                    })
+                    handleDelete(Number(params.id))
+                  }}
+                >
+                  Confirm
+                </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
