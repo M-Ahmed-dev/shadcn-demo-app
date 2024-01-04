@@ -2,8 +2,7 @@
 import { Button } from '@/components/ui/button'
 import InvoiceBadge from '../invoicebadge/page'
 
-import data from '../../../components/data.json'
-import { useRouter } from 'next/navigation'
+import { useParams } from 'next/navigation'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -15,12 +14,11 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger
 } from '@/components/ui/alert-dialog'
-import { useState } from 'react'
 
 export default function InvoiceDetailHeader(props: any) {
-  const ApiData = data
+  const { handleDelete } = props
   const { status } = props
-  const router = useRouter()
+  const params = useParams()
 
   return (
     <>
@@ -35,7 +33,10 @@ export default function InvoiceDetailHeader(props: any) {
 
           <AlertDialog>
             <AlertDialogTrigger>
-              <Button className="rounded-full bg-[#EC5757]  p-[1.5rem]">
+              <Button
+                onClick={() => handleDelete(Number(params.id))}
+                className="rounded-full bg-[#EC5757]  p-[1.5rem]"
+              >
                 Delete
               </Button>
             </AlertDialogTrigger>

@@ -9,14 +9,20 @@ import { useParams, useRouter } from 'next/navigation'
 import InvoiceTable from '../../../components/invoice/invoicetable/page'
 
 import data from '../../../components/data.json'
+import useDataStore from '../../../store/dataStore'
 
 export default function InvoiceDetailPageID() {
   const router = useRouter()
   const params = useParams()
 
-  console.log(params)
+  const { apiData, deleteHandler } = useDataStore()
 
-  console.log('data:', data)
+  const handleDelete = async (id: any) => {
+    deleteHandler(id)
+    await router.push('/')
+  }
+
+  console.log('ApiData:', apiData)
 
   return (
     <>
@@ -25,7 +31,10 @@ export default function InvoiceDetailPageID() {
           return (
             <div className="container py-24" key={invoice.id}>
               <GoBack />
-              <InvoiceDetailHeader status={invoice.status} />
+              <InvoiceDetailHeader
+                handleDelete={handleDelete}
+                status={invoice.status}
+              />
 
               <div className="rounded-lg bg-secondary p-[1.5rem]">
                 <div className="flex justify-between">
