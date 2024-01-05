@@ -31,8 +31,6 @@ export default function InvoiceDetailHeader(props: any) {
         </div>
 
         <div className="flex gap-[10px]">
-          <Button className="rounded-full p-[1.5rem] ">Edit</Button>
-
           <AlertDialog>
             <AlertDialogTrigger>
               <Button className="rounded-full bg-[#EC5757] p-[1.5rem]">

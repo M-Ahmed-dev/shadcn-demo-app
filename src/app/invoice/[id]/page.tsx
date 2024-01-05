@@ -8,7 +8,6 @@ import InvoiceTotal from '@/src/components/invoice/invoicetotal/page'
 import { useParams, useRouter } from 'next/navigation'
 import InvoiceTable from '../../../components/invoice/invoicetable/page'
 
-import data from '../../../components/data.json'
 import useDataStore from '../../../store/dataStore'
 
 export default function InvoiceDetailPageID() {
@@ -22,11 +21,11 @@ export default function InvoiceDetailPageID() {
     await router.push('/')
   }
 
-  console.log('ApiData:', apiData)
+  console.log('apiData', apiData)
 
   return (
     <>
-      {apiData.map((invoice) => {
+      {apiData.map((invoice: any) => {
         if (params.id === invoice.id.toString()) {
           return (
             <div className="container py-24" key={invoice.id}>
@@ -45,7 +44,7 @@ export default function InvoiceDetailPageID() {
                 <InvoiceDetails {...invoice} />
 
                 <div className="p-[2rem] bg-secondary">
-                  <InvoiceTable />
+                  <InvoiceTable invoices={invoice.invoices} />
                 </div>
                 <InvoiceTotal />
               </div>

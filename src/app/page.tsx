@@ -5,10 +5,9 @@ import InvoiceLabel from '../components/invoice/invoicelabel/page'
 import Link from 'next/link'
 import { useState } from 'react'
 import useDataStore from '../store/dataStore'
-import { ModeToggle } from '@/components/ui/mode-toggle'
 
 export default function Home() {
-  const { loading, apiData, fetchDataFromApi } = useDataStore()
+  const { loading, apiData } = useDataStore()
   const [selectedStatuses, setSelectedStatuses] = useState([])
 
   const handleStatusChange = (status: any) => {
@@ -23,8 +22,6 @@ export default function Home() {
     if (selectedStatuses.length === 0) return true // If no status is selected, show all
     return selectedStatuses.includes(item?.status)
   })
-
-  console.log('ApiData:', apiData)
 
   return (
     <section className="py-24">
