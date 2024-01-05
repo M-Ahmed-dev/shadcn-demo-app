@@ -18,7 +18,7 @@ export default function MainNav() {
 
   return (
     <nav className=" w-full border-b md:border-0">
-      <div className="items-center px-4 max-w-screen-xl mx-auto md:flex md:px-8">
+      {/* <div className="items-center px-4 max-w-screen-xl mx-auto md:flex md:px-8">
         <div className="flex items-center justify-between py-3 md:py-5 md:block">
           <Link href="/">
             <h1 className="text-3xl font-bold text-slate-300">Logo</h1>
@@ -50,16 +50,17 @@ export default function MainNav() {
                 type="text"
                 placeholder="Search"
               />
-            </form> */}
+            </form> 
           </ul>
         </div>
         <span>
           <DropLanguage />
         </span>
-        <span className="flex justify-end ">
-          <ModeToggle />
-        </span>
-      </div>
+      </div> */}
+
+      <span className="flex justify-end ">
+        <ModeToggle />
+      </span>
     </nav>
   )
 }

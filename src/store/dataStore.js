@@ -1,5 +1,9 @@
 // dataStore.js
+import { Toaster } from '@/components/ui/toaster'
+import { toast } from '@/components/ui/use-toast'
 import create from 'zustand'
+
+// const ItemQuantityData = []
 
 const ApiData = [
   {
@@ -7,94 +11,95 @@ const ApiData = [
     invoiceId: '#RT3080',
     dueDate: 'Due 19 Aug 2021',
     name: 'Jensen Huang',
-    price: '$1800.91',
     status: 'Paid',
     email: 'demo@1email.com',
     streetAddress: '106 Kendell Street Sharrington',
     postalCode: 'NR24 5WQ',
-    country: 'United Kingdom'
-  },
+    city: 'Sharrington',
+    price: '$1800.91',
+    country: 'United Kingdom',
+    itemName: 'Brand Identity',
+    quantity: 1,
+    itemPrice: '$1800.91',
+    total: '3,1204.04',
+    items: [
+      {
+        itemName: 'Brand Identity',
+        quantity: 1,
+        itemPrice: '$1800.91',
+        total: '3,1204.04'
+      },
+      {
+        itemName: 'Brand Identity',
+        quantity: 1,
+        itemPrice: '$1800.91',
+        total: '3,1204.04'
+      }
+    ]
+  }
+]
+
+const ItemQuantityData = [
   {
-    id: 2,
-    invoiceId: '#RT3081',
-    dueDate: 'Due 20 Aug 2021',
-    name: 'Alex Grim',
-    price: '$1800.92',
-    status: 'Paid',
-    email: 'demo@2email.com',
-    streetAddress: '118 West27th Street Brooklyn',
-    postalCode: 'NR24 5WQ',
-    country: 'Estonia'
-  },
-  {
-    id: 3,
-    invoiceId: '#RT3082',
-    dueDate: 'Due 21 Aug 2021',
-    name: 'Alex Pettyfer',
-    price: '$1800.93',
-    status: 'Pending',
-    email: 'demo@3email.com',
-    streetAddress: '121 W 32ND Street Manhattan',
-    postalCode: 'NR24 5WQ',
-    country: 'Lithuania'
-  },
-  {
-    id: 4,
-    invoiceId: '#RT3083',
-    dueDate: 'Due 21 Aug 2021',
-    name: 'John Morrison',
-    price: '$1300.93',
-    status: 'Pending',
-    email: 'demo@4email.com',
-    streetAddress: '130 Opera Street Jospheine',
-    postalCode: 'NR24 5WQ',
-    country: 'Latvia'
-  },
-  {
-    id: 5,
-    invoiceId: '#RT3084',
-    dueDate: 'Due 21 Aug 2021',
-    name: 'Melissa Clark',
-    price: '$4000.93',
-    status: 'Pending',
-    email: 'demo@5email.com',
-    streetAddress: '190 Freedom Lane Street',
-    postalCode: 'NR24 5WQ',
-    country: 'Finland'
-  },
-  {
-    id: 6,
-    invoiceId: '#RT3085',
-    dueDate: 'Due 21 Aug 2021',
-    name: 'Melissa Clark',
-    price: '$4000.93',
-    status: 'Draft',
-    email: 'demo@6email.com',
-    streetAddress: '106 Oslo Street Skate',
-    postalCode: 'NR24 5WQ',
-    country: 'Norway'
-  },
-  {
-    id: 7,
-    invoiceId: '#RT3086',
-    dueDate: 'Due 27 Aug 2021',
-    name: 'Melissa Clark',
-    price: '$8000.93',
-    status: 'Draft',
-    email: 'demo@6email.com',
-    streetAddress: '106 Dannish Street Lake',
-    postalCode: 'NR24 5WQ',
-    country: 'Denmark'
+    id: 1,
+    quantity: 1,
+    itemName: 'Brand Identity',
+    total: '3,1204.04',
+    price: '$1800.91'
   }
 ]
 
 const useDataStore = create((set) => ({
   loading: false,
   apiData: ApiData,
+  quantityForm: ItemQuantityData,
   deleteHandler: (idToDelete) => {
     set((state) => {
       const updatedData = state.apiData.filter((item) => item.id !== idToDelete)
       return { apiData: updatedData }
+    })
+  },
+  postData: (formData) => {
+    console.log('Posting data:', formData)
+    set((state) => {
+      const newId = Math.floor(Math.random() * 1000) + 1
+      const uniqueInvoiceId = `#RT${newId}`
+      const formattedPrice = `$${parseFloat(formData.price).toFixed(2)}`
+      const formattedDueDate = `Due ${formData.dueDate}`
+
+      const updatedData = [
+        ...state.apiData,
+        {
+          ...formData,
+          id: newId,
+          invoiceId: uniqueInvoiceId,
+          price: formattedPrice,
+          dueDate: formattedDueDate
+        }
+      ]
+      return { apiData: updatedData }
+    })
+  },
+  addQuantityForm: () => {
+    const newId = Math.floor(Math.random() * 1000) + 1
+
+    set((state) => ({
+      quantityForm: [
+        ...state.quantityForm,
+        {
+          itemName: '', // Set default or empty value for itemName
+          quantity: '', // Set default or empty value for quantity
+          price: '' // Set default or empty value for price
+        }
+      ]
+    }))
+  },
+
+  removeQuantityForm: (index) => {
+    set((state) => {
+      const updatedForms = [...state.quantityForm]
+      updatedForms.splice(index, 1)
+      return { quantityForm: updatedForms }
     })
   }
 }))

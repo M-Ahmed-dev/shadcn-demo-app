@@ -1,17 +1,15 @@
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger
-} from '@/components/ui/accordion'
-import { Button } from '@/components/ui/button'
-import { Checkbox } from '@/components/ui/checkbox'
-
-import { Plus } from 'lucide-react'
-import Sidebar from './sidebar/page'
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu'
+import useDataStore from '@/src/store/dataStore'
+import Sidebar from './sidebar/sidebardrawer/page'
 
 export default function Header(props: any) {
   const { selectedStatuses, handleStatusChange } = props
+  const { ApiData } = useDataStore()
 
   return (
     <>
@@ -22,42 +20,46 @@ export default function Header(props: any) {
         </div>
 
         <div className="flex gap-8 items-center">
-          <Accordion type="single" collapsible>
-            <AccordionItem value="item-1">
-              <AccordionTrigger>Filter by status</AccordionTrigger>
-              <AccordionContent>
-                <div className="flex flex-col absolute border border-#9277FD p-[1.5rem]">
-                  <label className="flex gap-3">
-                    <input
-                      className="cursor-pointer"
-                      type="checkbox"
-                      checked={selectedStatuses.includes('Paid')}
-                      onChange={() => handleStatusChange('Paid')}
-                    />
-                    Paid
-                  </label>
-                  <label className="flex gap-3">
-                    <input
-                      type="checkbox"
-                      checked={selectedStatuses.includes('Pending')}
-                      onChange={() => handleStatusChange('Pending')}
-                    />
-                    Pending
-                  </label>
-                  <label className="flex gap-3">
-                    <input
-                      type="checkbox"
-                      checked={selectedStatuses.includes('Draft')}
-                      onChange={() => handleStatusChange('Draft')}
-                    />
-                    Draft
-                  </label>
-                </div>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
+          <DropdownMenu>
+            <DropdownMenuTrigger>FIlter By Status</DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem>
+                <label className="flex gap-3">
+                  <input
+                    className="cursor-pointer"
+                    type="checkbox"
+                    checked={selectedStatuses.includes('Paid')}
+                    onChange={() => handleStatusChange('Paid')}
+                  />
+                  Paid
+                </label>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <label className="flex gap-3">
+                  <input
+                    type="checkbox"
+                    checked={selectedStatuses.includes('Pending')}
+                    onChange={() => handleStatusChange('Pending')}
+                  />
+                  Pending
+                </label>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                {' '}
+                <label className="flex gap-3">
+                  <input
+                    type="checkbox"
+                    checked={selectedStatuses.includes('Draft')}
+                    onChange={() => handleStatusChange('Draft')}
+                  />
+                  Draft
+                </label>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
 
           <Sidebar />
+          {/* <SideBarForm /> */}
         </div>
       </div>
     </>
